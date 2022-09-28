@@ -6,18 +6,18 @@ import pprint
 import os
 
 def Decode(input,b):
-    bar     = []
-    CP5     = []
-    Info    = []
+    background  = []
+    Signal      = []
+    Info        = []
     f = open(b+"/"+input, "r")
     for x in f:
         if "ttbar" in x:
-            bar.append(x.replace("\n",''))
-        elif "CP5" in x:
-            CP5.append(x.replace("\n",''))
+            background.append(x.replace("\n",''))
+        elif "Signal" in x:
+            Signal.append(x.replace("\n",''))
     Info.append(input)
-    Info.append(bar)
-    Info.append(CP5)
+    Info.append(background)
+    Info.append(Signal)
     
     return Info
 
@@ -25,22 +25,22 @@ def Sum(input,b):
     a = Decode(input,b)
     name    = a[0]
     tt      = a[1]
-    CP5     = a[2]
+    Signal  = a[2]
     l       = []
     
     #print(name)
 
-    ts = []
-    te = []
+    ts  = []
+    te  = []
     cps = []
-    cpe =[]
+    cpe = []
 
     for i in tt:
         d = i.split(" ")
         ts.append(float(d[5]))
         te.append(float(d[6]))
 
-    for j in CP5:
+    for j in Signal:
         k = j.split(" ")
         cps.append(float(k[5]))
         cpe.append(float(k[6]))
@@ -85,7 +85,7 @@ def Sum(input,b):
 
 def Finder(input_dir, b):
     cat_dir = "{0}/{1}".format(input_dir, b)
-    header = "Name,TTbar,TTbar_Err,CP5,CP5_Err\n"
+    header = "Name,TTbar,TTbar_Err,Signal,Signal_Err\n"
     
     # write headers
     file1 = open(cat_dir + "_gold.csv", "w")
@@ -127,14 +127,14 @@ def Summary(i):
     df = pd.read_csv(i)
     TTbar = df["TTbar"].to_numpy()
     TTbar_Err = df["TTbar_Err"].to_numpy()
-    CP5 = df["CP5"].to_numpy()
-    CP5_Err = df["CP5_Err"].to_numpy()
+    Signal = df["Signal"].to_numpy()
+    Signal_Err = df["Signal_Err"].to_numpy()
 
-    tt = str(np.sum(TTbar))
-    cp = str(np.sum(CP5))
-    terr = str(np.sqrt(np.sum(np.square(TTbar_Err))))
-    cperr= str(np.sqrt(np.sum(np.square(CP5_Err))))
-    u = [tt,terr,cp,cperr]
+    tt      = str(np.sum(TTbar))
+    cp      = str(np.sum(Signal))
+    terr    = str(np.sqrt(np.sum(np.square(TTbar_Err))))
+    cperr   = str(np.sqrt(np.sum(np.square(Signal_Err))))
+    u       = [tt,terr,cp,cperr]
     return u
 
 def SumFind(input_dir, sample):

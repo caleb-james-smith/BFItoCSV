@@ -99,25 +99,25 @@ def Sum(input_name, b):
     return h
 
 
-def Finder(input_dir, b, header):
-    cat_dir = "{0}/{1}".format(input_dir, b)
+def Finder(input_dir, cat_dir, header):
+    full_dir = "{0}/{1}".format(input_dir, cat_dir)
     
-    print(" - {0}".format(cat_dir))
+    print(" - {0}".format(full_dir))
     
     # write headers
-    file1 = open(cat_dir + "_gold.csv", "w")
+    file1 = open(full_dir + "_gold.csv", "w")
     file1.write(header)
     file1.flush()
 
-    file2 = open(cat_dir + "_silver.csv", "w")
+    file2 = open(full_dir + "_silver.csv", "w")
     file2.write(header)
     file2.flush()
 
-    file3 = open(cat_dir + "_bronze.csv", "w")
+    file3 = open(full_dir + "_bronze.csv", "w")
     file3.write(header)
     file3.flush()
     
-    file4 = open(cat_dir + "_zero.csv", "w")
+    file4 = open(full_dir + "_zero.csv", "w")
     file4.write(header)
     file4.flush()
 
@@ -126,7 +126,7 @@ def Finder(input_dir, b, header):
     bronze  = []
     zero    = []
 
-    for root, dirs, files in os.walk(cat_dir, topdown=False):
+    for root, dirs, files in os.walk(full_dir, topdown=False):
         #n_files = len(files)
         #print("In Finder(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
         for name in files:
@@ -140,13 +140,13 @@ def Finder(input_dir, b, header):
                 zero.append(os.path.join(name))
     
     for x in gold:
-        Sum(x, cat_dir)
+        Sum(x, full_dir)
     for x in silver:
-        Sum(x, cat_dir)
+        Sum(x, full_dir)
     for x in bronze:
-        Sum(x, cat_dir)
+        Sum(x, full_dir)
     for x in zero:
-        Sum(x, cat_dir)
+        Sum(x, full_dir)
     
 def Summary(input_file):
     df              = pd.read_csv(input_file)
@@ -166,12 +166,12 @@ def SumFind(input_dir, sample):
     print("Processing input directory: {0}".format(input_dir))
     
     header  = "Name,Background,Background_Err,Signal,Signal_Err\n"
+    categories = ["0L", "1L", "2L", "3L"]
 
-    Finder(input_dir, sample+"_0L", header)
-    Finder(input_dir, sample+"_1L", header)
-    Finder(input_dir, sample+"_2L", header)
-    Finder(input_dir, sample+"_3L", header)
-    
+    for cat in categories:
+        cat_dir = "{0}_{1}".format(sample, cat)
+        Finder(input_dir, cat_dir, header)
+
     summary_list = []
 
     for root, dirs, files in os.walk(input_dir, topdown=False):

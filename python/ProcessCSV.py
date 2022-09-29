@@ -6,15 +6,14 @@ import pprint
 import os
 
 # TODO
-# - do not add negative values (e.g. -999)
 # - add all background and signal names
 # - test on signal and background
 
 # DONE
 # - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
 # - fix first column
+# - skip -999 values
 
-#def Decode(input_file, input_dir):
 def Decode(input_dir, input_file):
     background  = []
     signal      = []
@@ -36,7 +35,6 @@ def Decode(input_dir, input_file):
     
     return Info
 
-#def Sum(input_file, input_dir):
 def Sum(input_dir, input_file):
     #print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
     #print("input_dir: {0}, input_file: {1}".format(input_dir, input_file))
@@ -57,6 +55,9 @@ def Sum(input_dir, input_file):
         data        = entry.split(" ")
         value       = float(data[5])
         value_err   = float(data[6])
+        # skip -999:
+        if value == -999.0:
+            continue
         ts.append(value)
         te.append(value_err)
 
@@ -64,6 +65,9 @@ def Sum(input_dir, input_file):
         data        = entry.split(" ")
         value       = float(data[5])
         value_err   = float(data[6])
+        # skip -999:
+        if value == -999.0:
+            continue
         cps.append(value)
         cpe.append(value_err)
     

@@ -6,8 +6,8 @@ import pprint
 import os
 
 # TODO
-# - change names of background and signal
 # - do not add negative values (e.g. -999)
+# - add all background and signal names
 # - test on signal and background
 
 # DONE
@@ -20,9 +20,12 @@ def Decode(input_name, b):
     Info        = []
     f = open(b+"/"+input_name, "r")
     for x in f:
+        #print("x = {0}".format(x))
         if "ttbar" in x:
             background.append(x.replace("\n",''))
+            #print("ttbar found in {0}".format(x))
         elif "signal" in x:
+            #print("signal found in {0}".format(x))
             signal.append(x.replace("\n",''))
     Info.append(input_name)
     Info.append(background)
@@ -31,7 +34,7 @@ def Decode(input_name, b):
     return Info
 
 def Sum(input_name, b):
-    a           = Decode(input_name,b)
+    a           = Decode(input_name, b)
     name        = a[0]
     background  = a[1]
     signal      = a[2]
@@ -70,6 +73,7 @@ def Sum(input_name, b):
     elif len(y)==0:
         l.append("0")
         l.append("0")
+    
     h = ",".join(l)
 
     # append to csv files
@@ -95,7 +99,7 @@ def Sum(input_name, b):
 
 def Finder(input_dir, b):
     cat_dir = "{0}/{1}".format(input_dir, b)
-    header = "Name,TTbar,TTbar_Err,Signal,Signal_Err\n"
+    header  = "Name,Background,Background_Err,Signal,Signal_Err\n"
     
     print(" - {0}".format(cat_dir))
     
@@ -144,15 +148,15 @@ def Finder(input_dir, b):
         Sum(x, cat_dir)
     
 def Summary(i):
-    df          = pd.read_csv(i)
-    TTbar       = df["TTbar"].to_numpy()
-    TTbar_Err   = df["TTbar_Err"].to_numpy()
-    Signal      = df["Signal"].to_numpy()
-    Signal_Err  = df["Signal_Err"].to_numpy()
+    df              = pd.read_csv(i)
+    Background      = df["Background"].to_numpy()
+    Background_Err  = df["Background_Err"].to_numpy()
+    Signal          = df["Signal"].to_numpy()
+    Signal_Err      = df["Signal_Err"].to_numpy()
 
-    tt      = str(np.sum(TTbar))
+    tt      = str(np.sum(Background))
     cp      = str(np.sum(Signal))
-    terr    = str(np.sqrt(np.sum(np.square(TTbar_Err))))
+    terr    = str(np.sqrt(np.sum(np.square(Background_Err))))
     cperr   = str(np.sqrt(np.sum(np.square(Signal_Err))))
     u       = [tt,terr,cp,cperr]
     return u

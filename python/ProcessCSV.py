@@ -5,28 +5,28 @@ import numpy as np
 import pprint
 import os
 
-def Decode(input,b):
+def Decode(input_name, b):
     background  = []
-    Signal      = []
+    signal      = []
     Info        = []
-    f = open(b+"/"+input, "r")
+    f = open(b+"/"+input_name, "r")
     for x in f:
         if "ttbar" in x:
             background.append(x.replace("\n",''))
-        elif "Signal" in x:
-            Signal.append(x.replace("\n",''))
-    Info.append(input)
+        elif "signal" in x:
+            signal.append(x.replace("\n",''))
+    Info.append(input_name)
     Info.append(background)
-    Info.append(Signal)
+    Info.append(signal)
     
     return Info
 
-def Sum(input,b):
-    a = Decode(input,b)
-    name    = a[0]
-    tt      = a[1]
-    Signal  = a[2]
-    l       = []
+def Sum(input_name, b):
+    a           = Decode(input_name,b)
+    name        = a[0]
+    background  = a[1]
+    signal      = a[2]
+    l           = []
     
     #print(name)
 
@@ -35,12 +35,12 @@ def Sum(input,b):
     cps = []
     cpe = []
 
-    for i in tt:
+    for i in background:
         d = i.split(" ")
         ts.append(float(d[5]))
         te.append(float(d[6]))
 
-    for j in Signal:
+    for j in signal:
         k = j.split(" ")
         cps.append(float(k[5]))
         cpe.append(float(k[6]))
@@ -74,7 +74,6 @@ def Sum(input,b):
         file2 = open(b+"_silver.csv", "a")
         file2.write(h+"\n")
         file2.close()
-
     elif "bron" in h.lower():
         file3 = open(b+"_bronze.csv", "a")
         file3.write(h+"\n")
@@ -168,9 +167,9 @@ def main():
     input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1"
     sample      = "BG"
     SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1"
-    sample      = "BG"
-    SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

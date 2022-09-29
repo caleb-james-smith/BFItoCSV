@@ -155,11 +155,12 @@ def Summary(input_file):
     Signal          = df["Signal"].to_numpy()
     Signal_Err      = df["Signal_Err"].to_numpy()
 
-    background      = str(np.sum(Background))
-    signal          = str(np.sum(Signal))
-    background_err  = str(np.sqrt(np.sum(np.square(Background_Err))))
-    signal_err      = str(np.sqrt(np.sum(np.square(Signal_Err))))
-    result          = [background, background_err, signal, signal_err]
+    sum_background      = str(np.sum(Background))
+    sum_signal          = str(np.sum(Signal))
+    sum_background_err  = str(np.sqrt(np.sum(np.square(Background_Err))))
+    sum_signal_err      = str(np.sqrt(np.sum(np.square(Signal_Err))))
+    result              = [sum_background, sum_background_err, sum_signal, sum_signal_err]
+    
     return result
 
 def SumFind(input_dir, sample):

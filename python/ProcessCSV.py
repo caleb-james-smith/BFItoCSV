@@ -6,14 +6,13 @@ import pprint
 import os
 
 # TODO
-# - fix first column
 # - change names of background and signal
 # - do not add negative values (e.g. -999)
 # - test on signal and background
 
 # DONE
 # - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
-
+# - fix first column
 
 def Decode(input_name, b):
     background  = []
@@ -38,8 +37,6 @@ def Sum(input_name, b):
     signal      = a[2]
     l           = []
     
-    #print(name)
-
     ts  = []
     te  = []
     cps = []
@@ -100,6 +97,8 @@ def Finder(input_dir, b):
     cat_dir = "{0}/{1}".format(input_dir, b)
     header = "Name,TTbar,TTbar_Err,Signal,Signal_Err\n"
     
+    print(" - {0}".format(cat_dir))
+    
     # write headers
     file1 = open(cat_dir + "_gold.csv", "w")
     file1.write(header)
@@ -123,8 +122,7 @@ def Finder(input_dir, b):
     zero    = []
 
     for root, dirs, files in os.walk(cat_dir, topdown=False):
-    #for root, dirs, files in os.walk("./"+b, topdown=False):
-        n_files = len(files)
+        #n_files = len(files)
         #print("In Finder(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
         for name in files:
             if "gold" in os.path.join(name).lower():
@@ -160,6 +158,8 @@ def Summary(i):
     return u
 
 def SumFind(input_dir, sample):
+    print("Processing input directory: {0}".format(input_dir))
+
     Finder(input_dir, sample+"_0L")
     Finder(input_dir, sample+"_1L")
     Finder(input_dir, sample+"_2L")
@@ -168,33 +168,20 @@ def SumFind(input_dir, sample):
     summary_list = []
 
     for root, dirs, files in os.walk(input_dir, topdown=False):
-    #for root, dirs, files in os.walk("./", topdown=False):
-        n_files = len(files)
+        #n_files = len(files)
         #print("In SumFind(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
-        #print("root: {0}, dirs: {1}, files: {2}".format(root, dirs, files))
         for name in files:
             output = "{0}/{1}".format(root, name)
-            #print("In SumFind(): output: {0}".format(output))
             if sample in name:
-                #values = ",".join(Summary(output))
-                #summary_list.append(name)
-                #summary_list.append(values)
-                #summary_list.append("\n")
-                #print("name: {0}".format(name))
-                #print("values: {0}".format(values))
-                values = Summary(output)
-                line = [name] + values
+                values  = Summary(output)
+                line    = [name] + values
                 summary_list.append(line)
-                #print(line)
     
-    #print(",".join(summary_list))
     #print(summary_list)
 
     summary_file = "{0}/Summary.csv".format(input_dir)
     f = open(summary_file, "w")
-    #f.write(",".join(summary_list))
     for line in summary_list:
-        #print(line)
         f.write(",".join(line) + "\n")
     f.close()
 

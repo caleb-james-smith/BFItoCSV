@@ -5,11 +5,15 @@ import numpy as np
 import pprint
 import os
 
-
 # TODO
+# - fix first column
+# - change names of background and signal
 # - do not add negative values (e.g. -999)
-# - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
 # - test on signal and background
+
+# DONE
+# - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
+
 
 def Decode(input_name, b):
     background  = []
@@ -85,9 +89,9 @@ def Sum(input_name, b):
         file3.write(h+"\n")
         file3.close()
     else:
-        file1 = open(b+"_zero.csv", "a")
-        file1.write(h+"\n")
-        file1.close()
+        file4 = open(b+"_zero.csv", "a")
+        file4.write(h+"\n")
+        file4.close()
 
     return h
 
@@ -109,9 +113,9 @@ def Finder(input_dir, b):
     file3.write(header)
     file3.flush()
     
-    file1 = open(cat_dir + "_zero.csv", "w")
-    file1.write(header)
-    file1.flush()
+    file4 = open(cat_dir + "_zero.csv", "w")
+    file4.write(header)
+    file4.flush()
 
     gold    = []
     silver  = []
@@ -121,7 +125,7 @@ def Finder(input_dir, b):
     for root, dirs, files in os.walk(cat_dir, topdown=False):
     #for root, dirs, files in os.walk("./"+b, topdown=False):
         n_files = len(files)
-        print("In Finder(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
+        #print("In Finder(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
         for name in files:
             if "gold" in os.path.join(name).lower():
                 gold.append(os.path.join(name))
@@ -142,11 +146,11 @@ def Finder(input_dir, b):
         Sum(x, cat_dir)
     
 def Summary(i):
-    df = pd.read_csv(i)
-    TTbar = df["TTbar"].to_numpy()
-    TTbar_Err = df["TTbar_Err"].to_numpy()
-    Signal = df["Signal"].to_numpy()
-    Signal_Err = df["Signal_Err"].to_numpy()
+    df          = pd.read_csv(i)
+    TTbar       = df["TTbar"].to_numpy()
+    TTbar_Err   = df["TTbar_Err"].to_numpy()
+    Signal      = df["Signal"].to_numpy()
+    Signal_Err  = df["Signal_Err"].to_numpy()
 
     tt      = str(np.sum(TTbar))
     cp      = str(np.sum(Signal))
@@ -161,25 +165,37 @@ def SumFind(input_dir, sample):
     Finder(input_dir, sample+"_2L")
     Finder(input_dir, sample+"_3L")
     
-    l = []
+    summary_list = []
+
     for root, dirs, files in os.walk(input_dir, topdown=False):
     #for root, dirs, files in os.walk("./", topdown=False):
         n_files = len(files)
-        print("In SumFind(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
+        #print("In SumFind(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
         #print("root: {0}, dirs: {1}, files: {2}".format(root, dirs, files))
         for name in files:
             output = "{0}/{1}".format(root, name)
             #print("In SumFind(): output: {0}".format(output))
             if sample in name:
-                l.append(name)
-                l.append(",".join(Summary(output)))
-                l.append("\n")
+                #values = ",".join(Summary(output))
+                #summary_list.append(name)
+                #summary_list.append(values)
+                #summary_list.append("\n")
+                #print("name: {0}".format(name))
+                #print("values: {0}".format(values))
+                values = Summary(output)
+                line = [name] + values
+                summary_list.append(line)
+                #print(line)
     
-    #print(",".join(l))
+    #print(",".join(summary_list))
+    #print(summary_list)
 
     summary_file = "{0}/Summary.csv".format(input_dir)
     f = open(summary_file, "w")
-    f.write(",".join(l))
+    #f.write(",".join(summary_list))
+    for line in summary_list:
+        #print(line)
+        f.write(",".join(line) + "\n")
     f.close()
 
 def main():

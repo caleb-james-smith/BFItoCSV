@@ -14,11 +14,11 @@ import os
 # - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
 # - fix first column
 
-def Decode(input_name, b):
+def Decode(input_file, input_dir):
     background  = []
     signal      = []
     Info        = []
-    f = open(b+"/"+input_name, "r")
+    f = open(input_dir + "/" + input_file, "r")
     # TODO: add more background names
     # TODO: fix signal name
     for x in f:
@@ -29,14 +29,16 @@ def Decode(input_name, b):
         elif "signal" in x:
             #print("signal found in {0}".format(x))
             signal.append(x.replace("\n",''))
-    Info.append(input_name)
+    Info.append(input_file)
     Info.append(background)
     Info.append(signal)
     
     return Info
 
-def Sum(input_name, b):
-    a           = Decode(input_name, b)
+def Sum(input_file, input_dir):
+    print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
+
+    a           = Decode(input_file, input_dir)
     name        = a[0]
     background  = a[1]
     signal      = a[2]
@@ -47,15 +49,29 @@ def Sum(input_name, b):
     cps = []
     cpe = []
 
-    for i in background:
-        d = i.split(" ")
-        ts.append(float(d[5]))
-        te.append(float(d[6]))
+    #for i in background:
+    #    d = i.split(" ")
+    #    ts.append(float(d[5]))
+    #    te.append(float(d[6]))
 
-    for j in signal:
-        k = j.split(" ")
-        cps.append(float(k[5]))
-        cpe.append(float(k[6]))
+    #for j in signal:
+    #    k = j.split(" ")
+    #    cps.append(float(k[5]))
+    #    cpe.append(float(k[6]))
+
+    for entry in background:
+        data        = entry.split(" ")
+        value       = float(data[5])
+        value_err   = float(data[6])
+        ts.append(value)
+        te.append(value_err)
+
+    for entry in signal:
+        data        = entry.split(" ")
+        value       = float(data[5])
+        value_err   = float(data[6])
+        cps.append(value)
+        cpe.append(value_err)
     
     e = np.array(ts)
     r = np.array(te)
@@ -80,19 +96,19 @@ def Sum(input_name, b):
 
     # append to csv files
     if "gold" in h.lower():
-        file1 = open(b+"_gold.csv", "a")
+        file1 = open(input_dir + "_gold.csv", "a")
         file1.write(h+"\n")
         file1.close()
     elif "slvr" in h.lower():
-        file2 = open(b+"_silver.csv", "a")
+        file2 = open(input_dir + "_silver.csv", "a")
         file2.write(h+"\n")
         file2.close()
     elif "bron" in h.lower():
-        file3 = open(b+"_bronze.csv", "a")
+        file3 = open(input_dir + "_bronze.csv", "a")
         file3.write(h+"\n")
         file3.close()
     else:
-        file4 = open(b+"_zero.csv", "a")
+        file4 = open(input_dir + "_zero.csv", "a")
         file4.write(h+"\n")
         file4.close()
 

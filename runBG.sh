@@ -1,4 +1,4 @@
-
+#!/usr/bin/bash
 
 BFI=${1-test.root}
 DIR=${2-CSVFiles}
@@ -30,3 +30,4 @@ mv *.csv BG_3L/
 
 
 mv BG_*L ${DIR}/
+

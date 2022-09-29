@@ -5,6 +5,12 @@ import numpy as np
 import pprint
 import os
 
+
+# TODO
+# - do not add negative values (e.g. -999)
+# - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
+# - test on signal and background
+
 def Decode(input_name, b):
     background  = []
     signal      = []
@@ -78,6 +84,10 @@ def Sum(input_name, b):
         file3 = open(b+"_bronze.csv", "a")
         file3.write(h+"\n")
         file3.close()
+    else:
+        file1 = open(b+"_zero.csv", "a")
+        file1.write(h+"\n")
+        file1.close()
 
     return h
 
@@ -98,10 +108,15 @@ def Finder(input_dir, b):
     file3 = open(cat_dir + "_bronze.csv", "w")
     file3.write(header)
     file3.flush()
+    
+    file1 = open(cat_dir + "_zero.csv", "w")
+    file1.write(header)
+    file1.flush()
 
     gold    = []
     silver  = []
     bronze  = []
+    zero    = []
 
     for root, dirs, files in os.walk(cat_dir, topdown=False):
     #for root, dirs, files in os.walk("./"+b, topdown=False):
@@ -114,12 +129,16 @@ def Finder(input_dir, b):
                 silver.append(os.path.join(name))
             elif  "bron" in os.path.join(name).lower():
                 bronze.append(os.path.join(name))
+            else:
+                zero.append(os.path.join(name))
     
     for x in gold:
         Sum(x, cat_dir)
     for x in silver:
         Sum(x, cat_dir)
     for x in bronze:
+        Sum(x, cat_dir)
+    for x in zero:
         Sum(x, cat_dir)
     
 def Summary(i):
@@ -167,9 +186,9 @@ def main():
     input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1"
     sample      = "BG"
     SumFind(input_dir, sample)
-    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1"
-    #sample      = "BG"
-    #SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1"
+    sample      = "BG"
+    SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

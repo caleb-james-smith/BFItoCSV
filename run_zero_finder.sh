@@ -1,8 +1,11 @@
+#!/usr/bin/bash
 
-
-
-
-CSVDIR=testCSVFiles
 #ARG is directory where your csv files are
 #output prints to screen so pipe into a text file
-python zero_finder.py ${CSVDIR} > zero.log
+
+CSVDIR=BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1
+python zero_finder.py ${CSVDIR} > zeros_${CSVDIR}.log
+
+CSVDIR=BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1
+python zero_finder.py ${CSVDIR} > zeros_${CSVDIR}.log
+

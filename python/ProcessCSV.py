@@ -19,6 +19,8 @@ def Decode(input_name, b):
     signal      = []
     Info        = []
     f = open(b+"/"+input_name, "r")
+    # TODO: add more background names
+    # TODO: fix signal name
     for x in f:
         #print("x = {0}".format(x))
         if "ttbar" in x:
@@ -97,9 +99,8 @@ def Sum(input_name, b):
     return h
 
 
-def Finder(input_dir, b):
+def Finder(input_dir, b, header):
     cat_dir = "{0}/{1}".format(input_dir, b)
-    header  = "Name,Background,Background_Err,Signal,Signal_Err\n"
     
     print(" - {0}".format(cat_dir))
     
@@ -147,27 +148,29 @@ def Finder(input_dir, b):
     for x in zero:
         Sum(x, cat_dir)
     
-def Summary(i):
-    df              = pd.read_csv(i)
+def Summary(input_file):
+    df              = pd.read_csv(input_file)
     Background      = df["Background"].to_numpy()
     Background_Err  = df["Background_Err"].to_numpy()
     Signal          = df["Signal"].to_numpy()
     Signal_Err      = df["Signal_Err"].to_numpy()
 
-    tt      = str(np.sum(Background))
-    cp      = str(np.sum(Signal))
-    terr    = str(np.sqrt(np.sum(np.square(Background_Err))))
-    cperr   = str(np.sqrt(np.sum(np.square(Signal_Err))))
-    u       = [tt,terr,cp,cperr]
-    return u
+    background      = str(np.sum(Background))
+    signal          = str(np.sum(Signal))
+    background_err  = str(np.sqrt(np.sum(np.square(Background_Err))))
+    signal_err      = str(np.sqrt(np.sum(np.square(Signal_Err))))
+    result          = [background, background_err, signal, signal_err]
+    return result
 
 def SumFind(input_dir, sample):
     print("Processing input directory: {0}".format(input_dir))
+    
+    header  = "Name,Background,Background_Err,Signal,Signal_Err\n"
 
-    Finder(input_dir, sample+"_0L")
-    Finder(input_dir, sample+"_1L")
-    Finder(input_dir, sample+"_2L")
-    Finder(input_dir, sample+"_3L")
+    Finder(input_dir, sample+"_0L", header)
+    Finder(input_dir, sample+"_1L", header)
+    Finder(input_dir, sample+"_2L", header)
+    Finder(input_dir, sample+"_3L", header)
     
     summary_list = []
 
@@ -185,6 +188,7 @@ def SumFind(input_dir, sample):
 
     summary_file = "{0}/Summary.csv".format(input_dir)
     f = open(summary_file, "w")
+    f.write(header)
     for line in summary_list:
         f.write(",".join(line) + "\n")
     f.close()

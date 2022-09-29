@@ -14,7 +14,8 @@ import os
 # - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
 # - fix first column
 
-def Decode(input_file, input_dir):
+#def Decode(input_file, input_dir):
+def Decode(input_dir, input_file):
     background  = []
     signal      = []
     Info        = []
@@ -35,10 +36,13 @@ def Decode(input_file, input_dir):
     
     return Info
 
-def Sum(input_file, input_dir):
-    print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
+#def Sum(input_file, input_dir):
+def Sum(input_dir, input_file):
+    #print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
+    #print("input_dir: {0}, input_file: {1}".format(input_dir, input_file))
+    print(" --- {0}".format(input_file))
 
-    a           = Decode(input_file, input_dir)
+    a           = Decode(input_dir, input_file)
     name        = a[0]
     background  = a[1]
     signal      = a[2]
@@ -48,16 +52,6 @@ def Sum(input_file, input_dir):
     te  = []
     cps = []
     cpe = []
-
-    #for i in background:
-    #    d = i.split(" ")
-    #    ts.append(float(d[5]))
-    #    te.append(float(d[6]))
-
-    #for j in signal:
-    #    k = j.split(" ")
-    #    cps.append(float(k[5]))
-    #    cpe.append(float(k[6]))
 
     for entry in background:
         data        = entry.split(" ")
@@ -156,13 +150,13 @@ def Finder(input_dir, cat_dir, header):
                 zero.append(os.path.join(name))
     
     for x in gold:
-        Sum(x, full_dir)
+        Sum(full_dir, x)
     for x in silver:
-        Sum(x, full_dir)
+        Sum(full_dir, x)
     for x in bronze:
-        Sum(x, full_dir)
+        Sum(full_dir, x)
     for x in zero:
-        Sum(x, full_dir)
+        Sum(full_dir, x)
     
 def Summary(input_file):
     df              = pd.read_csv(input_file)

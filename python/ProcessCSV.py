@@ -38,7 +38,7 @@ def Decode(input_dir, input_file):
 def Sum(input_dir, input_file):
     #print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
     #print("input_dir: {0}, input_file: {1}".format(input_dir, input_file))
-    print(" --- {0}".format(input_file))
+    #print(" --- {0}".format(input_file))
 
     a           = Decode(input_dir, input_file)
     name        = a[0]
@@ -195,8 +195,11 @@ def SumFind(input_dir, sample):
         for name in files:
             output = "{0}/{1}".format(root, name)
             if sample in name:
+                # remove .csv extension
+                name_clean = name.replace(".csv", "")
+                #print("name: {0}, name_clean: {1}".format(name, name_clean))
                 values  = Summary(output)
-                line    = [name] + values
+                line    = [name_clean] + values
                 summary_list.append(line)
     
     #print(summary_list)

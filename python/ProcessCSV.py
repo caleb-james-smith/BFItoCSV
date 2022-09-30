@@ -14,6 +14,22 @@ import os
 # - fix first column
 # - skip -999 values
 
+# get yields and errors from data
+def getValues(data):
+    yields = []
+    errors = []
+    # get yields and errors
+    for entry in data:
+        entry_list  = entry.split(" ")
+        bin_yield   = float(entry_list[5])
+        bin_error   = float(entry_list[6])
+        # skip bin_yield = -999:
+        if bin_yield == -999.0:
+            continue
+        yields.append(bin_yield)
+        errors.append(bin_error)
+    return yields, errors
+
 def Decode(input_dir, input_file):
     background  = []
     signal      = []
@@ -45,33 +61,9 @@ def Sum(input_dir, input_file):
     background  = info[1]
     signal      = info[2]
     l           = []
-    
-    background_yield    = []
-    background_error    = []
-    signal_yield        = []
-    signal_error        = []
 
-    # get background yields and errors
-    for entry in background:
-        data    = entry.split(" ")
-        b_yield = float(data[5])
-        b_error = float(data[6])
-        # skip b_yield = -999:
-        if b_yield == -999.0:
-            continue
-        background_yield.append(b_yield)
-        background_error.append(b_error)
-
-    # get signal yields and errors
-    for entry in signal:
-        data    = entry.split(" ")
-        b_yield = float(data[5])
-        b_error = float(data[6])
-        # skip b_yield = -999:
-        if b_yield == -999.0:
-            continue
-        signal_yield.append(b_yield)
-        signal_error.append(b_error)
+    background_yield, background_error  = getValues(background)
+    signal_yield, signal_error          = getValues(signal)
     
     e = np.array(background_yield)
     r = np.array(background_error)
@@ -96,21 +88,21 @@ def Sum(input_dir, input_file):
 
     # append to csv files
     if "gold" in h.lower():
-        file1 = open(input_dir + "_gold.csv", "a")
-        file1.write(h+"\n")
-        file1.close()
+        f = open(input_dir + "_gold.csv", "a")
+        f.write(h+"\n")
+        f.close()
     elif "slvr" in h.lower():
-        file2 = open(input_dir + "_silver.csv", "a")
-        file2.write(h+"\n")
-        file2.close()
+        f = open(input_dir + "_silver.csv", "a")
+        f.write(h+"\n")
+        f.close()
     elif "bron" in h.lower():
-        file3 = open(input_dir + "_bronze.csv", "a")
-        file3.write(h+"\n")
-        file3.close()
+        f = open(input_dir + "_bronze.csv", "a")
+        f.write(h+"\n")
+        f.close()
     else:
-        file4 = open(input_dir + "_zero.csv", "a")
-        file4.write(h+"\n")
-        file4.close()
+        f = open(input_dir + "_zero.csv", "a")
+        f.write(h+"\n")
+        f.close()
 
     return h
 

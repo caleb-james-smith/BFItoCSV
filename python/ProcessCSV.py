@@ -60,51 +60,49 @@ def Sum(input_dir, input_file):
     name        = info[0]
     background  = info[1]
     signal      = info[2]
-    l           = []
+    master_list = []
 
     background_yield, background_error  = getValues(background)
     signal_yield, signal_error          = getValues(signal)
     
-    e = np.array(background_yield)
-    r = np.array(background_error)
-    y = np.array(signal_yield)
-    u = np.array(signal_error)
+    background_yield    = np.array(background_yield)
+    background_error    = np.array(background_error)
+    signal_yield        = np.array(signal_yield)
+    signal_error        = np.array(signal_error)
     
-    l.append(str(name))
-    if len(e)>0:
-        l.append(str(np.sum(e)))
-        l.append(str(np.sqrt(np.sum(np.square(r)))))
-    elif len(e)==0:
-        l.append("0")
-        l.append("0")
-    if len(y)>0:
-        l.append(str(np.sum(y)))
-        l.append(str(np.sqrt(np.sum(np.square(u)))))
-    elif len(y)==0:
-        l.append("0")
-        l.append("0")
+    master_list.append(str(name))
+    if len(background_yield) > 0:
+        master_list.append(str(np.sum(background_yield)))
+        master_list.append(str(np.sqrt(np.sum(np.square(background_error)))))
+    elif len(background_yield) == 0:
+        master_list.append("0")
+        master_list.append("0")
+    if len(signal_yield) > 0:
+        master_list.append(str(np.sum(signal_yield)))
+        master_list.append(str(np.sqrt(np.sum(np.square(signal_error)))))
+    elif len(signal_yield) == 0:
+        master_list.append("0")
+        master_list.append("0")
     
-    h = ",".join(l)
+    master_string = ",".join(master_list)
 
     # append to csv files
-    if "gold" in h.lower():
+    if "gold" in master_string.lower():
         f = open(input_dir + "_gold.csv", "a")
-        f.write(h+"\n")
+        f.write(master_string + "\n")
         f.close()
-    elif "slvr" in h.lower():
+    elif "slvr" in master_string.lower():
         f = open(input_dir + "_silver.csv", "a")
-        f.write(h+"\n")
+        f.write(master_string + "\n")
         f.close()
-    elif "bron" in h.lower():
+    elif "bron" in master_string.lower():
         f = open(input_dir + "_bronze.csv", "a")
-        f.write(h+"\n")
+        f.write(master_string + "\n")
         f.close()
     else:
         f = open(input_dir + "_zero.csv", "a")
-        f.write(h+"\n")
+        f.write(master_string + "\n")
         f.close()
-
-    return h
 
 
 def Finder(input_dir, cat_dir, header):

@@ -1,16 +1,16 @@
 # Overview
 The code consists of two stages.
-(1) C based tool that generates CSV files of yields from BFI <br/>
-(2) python pandas script that operates on dataframe created from CSV files <br/>
+1. C based tool that generates CSV files of yields from BFI <br/>
+2. python pandas script that operates on dataframe created from CSV files <br/>
 
 ## Instructions on running zero finding tools
-- (1) Make CSV files
-	- update run_runBG.sh and put in your root files and output directory
-	- do ./run_runBG.sh
+1. Make CSV files
+    - update run_runBG.sh and put in your root files and output directory
+    - do ./run_runBG.sh
 	
-- (2) Analyze CSV files (you will need pandas)
-	- update run_zero_finder.sh, put in csv directory from the last step and output text file name
-	- do ./run_zero_Finder.sh  
+2. Analyze CSV files (you will need pandas)
+    - update run_zero_finder.sh, put in csv directory from the last step and output text file name
+    - do ./run_zero_Finder.sh  
 
 ## CSV creation
 There are two scripts, macroBG.C and macroS.C.
@@ -42,8 +42,8 @@ For each approach, first, pipe the python std out to a file.
 ```
 python script.py > output.x
 ```
-(1) printing dataframe.to_csv(index=False) -- this method reanalyzes sliced down frames<br/>
-(2) printing dataframe -- this method is very readable<br/>
+1. printing dataframe.to_csv(index=False) -- this method reanalyzes sliced down frames
+2. printing dataframe -- this method is very readable
 
 ## Calculate Totals
 This script calculates total yields and errors from a set of csv files.

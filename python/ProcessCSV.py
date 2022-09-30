@@ -6,13 +6,14 @@ import pprint
 import os
 
 # TODO
-# - add all background and signal names
+# - fix signal name
 # - test on signal and background
 
 # DONE
 # - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
 # - fix first column
 # - skip -999 values
+# - run over all background
 
 # get yields and errors from data
 def getValues(data):
@@ -35,13 +36,18 @@ def Decode(input_dir, input_file):
     signal      = []
     info        = []
     f = open(input_dir + "/" + input_file, "r")
-    # TODO: add more background names
     # TODO: fix signal name
     for x in f:
         #print("x = {0}".format(x))
-        if "ttbar" in x:
+        
+        # add ttbar
+        # if "ttbar" in x:
+        #     background.append(x.replace("\n",''))
+        #     #print("ttbar found in {0}".format(x))
+        # add all-bkg
+        if "all-bkg" in x:
             background.append(x.replace("\n",''))
-            #print("ttbar found in {0}".format(x))
+            #print("all-bkg found in {0}".format(x))
         elif "signal" in x:
             #print("signal found in {0}".format(x))
             signal.append(x.replace("\n",''))

@@ -117,25 +117,16 @@ def Sum(input_dir, input_file):
 
 def Finder(input_dir, cat_dir, header):
     full_dir = "{0}/{1}".format(input_dir, cat_dir)
+    lepton_types = ["gold", "silver", "bronze", "zero"]
     
     print(" - {0}".format(full_dir))
     
-    # write headers
-    file1 = open(full_dir + "_gold.csv", "w")
-    file1.write(header)
-    file1.flush()
-
-    file2 = open(full_dir + "_silver.csv", "w")
-    file2.write(header)
-    file2.flush()
-
-    file3 = open(full_dir + "_bronze.csv", "w")
-    file3.write(header)
-    file3.flush()
-    
-    file4 = open(full_dir + "_zero.csv", "w")
-    file4.write(header)
-    file4.flush()
+    # write headers to csv files
+    for lepton_type in lepton_types:
+        f_name = "{0}_{1}.csv".format(full_dir, lepton_type)
+        f = open(f_name, "w")
+        f.write(header)
+        f.flush()
 
     gold    = []
     silver  = []
@@ -153,6 +144,7 @@ def Finder(input_dir, cat_dir, header):
             if ".swp" in name_lower:
                 continue
             
+            # lepton types: use analysis names
             if "gold" in name_lower:
                 gold.append(os.path.join(name))
             elif "slvr" in name_lower:
@@ -189,7 +181,7 @@ def Summary(input_file):
 def SumFind(input_dir, sample):
     print("Processing input directory: {0}".format(input_dir))
     
-    header  = "Name,Background,Background_Err,Signal,Signal_Err\n"
+    header = "Name,Background,Background_Err,Signal,Signal_Err\n"
     categories = ["0L", "1L", "2L", "3L"]
 
     for cat in categories:

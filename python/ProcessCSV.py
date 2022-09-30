@@ -17,7 +17,7 @@ import os
 def Decode(input_dir, input_file):
     background  = []
     signal      = []
-    Info        = []
+    info        = []
     f = open(input_dir + "/" + input_file, "r")
     # TODO: add more background names
     # TODO: fix signal name
@@ -29,52 +29,54 @@ def Decode(input_dir, input_file):
         elif "signal" in x:
             #print("signal found in {0}".format(x))
             signal.append(x.replace("\n",''))
-    Info.append(input_file)
-    Info.append(background)
-    Info.append(signal)
+    info.append(input_file)
+    info.append(background)
+    info.append(signal)
     
-    return Info
+    return info
 
 def Sum(input_dir, input_file):
     #print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
     #print("input_dir: {0}, input_file: {1}".format(input_dir, input_file))
     #print(" --- {0}".format(input_file))
 
-    a           = Decode(input_dir, input_file)
-    name        = a[0]
-    background  = a[1]
-    signal      = a[2]
+    info        = Decode(input_dir, input_file)
+    name        = info[0]
+    background  = info[1]
+    signal      = info[2]
     l           = []
     
-    ts  = []
-    te  = []
-    cps = []
-    cpe = []
+    background_yield    = []
+    background_error    = []
+    signal_yield        = []
+    signal_error        = []
 
+    # get background yields and errors
     for entry in background:
-        data        = entry.split(" ")
-        value       = float(data[5])
-        value_err   = float(data[6])
-        # skip -999:
-        if value == -999.0:
+        data    = entry.split(" ")
+        b_yield = float(data[5])
+        b_error = float(data[6])
+        # skip b_yield = -999:
+        if b_yield == -999.0:
             continue
-        ts.append(value)
-        te.append(value_err)
+        background_yield.append(b_yield)
+        background_error.append(b_error)
 
+    # get signal yields and errors
     for entry in signal:
-        data        = entry.split(" ")
-        value       = float(data[5])
-        value_err   = float(data[6])
-        # skip -999:
-        if value == -999.0:
+        data    = entry.split(" ")
+        b_yield = float(data[5])
+        b_error = float(data[6])
+        # skip b_yield = -999:
+        if b_yield == -999.0:
             continue
-        cps.append(value)
-        cpe.append(value_err)
+        signal_yield.append(b_yield)
+        signal_error.append(b_error)
     
-    e = np.array(ts)
-    r = np.array(te)
-    y = np.array(cps)
-    u = np.array(cpe)
+    e = np.array(background_yield)
+    r = np.array(background_error)
+    y = np.array(signal_yield)
+    u = np.array(signal_error)
     
     l.append(str(name))
     if len(e)>0:
@@ -144,11 +146,18 @@ def Finder(input_dir, cat_dir, header):
         #n_files = len(files)
         #print("In Finder(): root: {0}, dirs: {1}, n_files: {2}".format(root, dirs, n_files))
         for name in files:
-            if "gold" in os.path.join(name).lower():
+            name_lower = os.path.join(name).lower()
+            #print("name: {0}, name_lower: {1}".format(name, name_lower))
+            
+            # skip vim swap files from files open in vim, i.e. ".file.csv.swp"
+            if ".swp" in name_lower:
+                continue
+            
+            if "gold" in name_lower:
                 gold.append(os.path.join(name))
-            elif "slvr" in os.path.join(name).lower():
+            elif "slvr" in name_lower:
                 silver.append(os.path.join(name))
-            elif  "bron" in os.path.join(name).lower():
+            elif  "bron" in name_lower:
                 bronze.append(os.path.join(name))
             else:
                 zero.append(os.path.join(name))

@@ -36,20 +36,23 @@ print(allbgframe.shape)
 #print(allbgframe)
 #allbgframe = allbgframe.reset_index()
 print("0.1 < Yield < 1")
-subframe = allbgframe.loc[((allbgframe['Yield']<1)  & (allbgframe['Yield']>0.1)) ]
+subframe = allbgframe.loc[((allbgframe['Yield']<1) & (allbgframe['Yield']>0.1)) ]
 subframe['Yield'] = subframe['Yield'].round(5)
 print(subframe.shape)
 print(subframe)
+#print(subframe3.to_string())
 
 print("0.01 < Yield < 0.1")
-subframe2 = allbgframe.loc[((allbgframe['Yield']<0.1)  & (allbgframe['Yield']>0.01)) ]
+subframe2 = allbgframe.loc[((allbgframe['Yield']<0.1) & (allbgframe['Yield']>0.01)) ]
 subframe2['Yield'] = subframe2['Yield'].round(5)
 print(subframe2.shape)
 print(subframe2)
+#print(subframe3.to_string())
 
-print("0 < Yield < 0.01")
-subframe3 = allbgframe.loc[((allbgframe['Yield']<0.01)) ]
+print("Yield < 0.01")
+subframe3 = allbgframe.loc[((allbgframe['Yield']<0.01))]
 subframe3['Yield'] = subframe3['Yield'].round(5)
 print(subframe3.shape)
 print(subframe3)
+#print(subframe3.to_string())
 

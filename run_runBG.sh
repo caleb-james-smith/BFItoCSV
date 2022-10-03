@@ -36,4 +36,3 @@
 ./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1.root BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1
 ./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1.root BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1
 
-

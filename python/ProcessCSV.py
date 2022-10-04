@@ -209,23 +209,36 @@ def SumFind(input_dir, sample):
     f.close()
 
 def main():
-    # Sum background
-    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1"
+    # --- Sum background --- #
+    #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v1"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v1"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2"
     sample      = "BG"
     SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1"
+    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
     sample      = "BG"
     SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v1"
-    sample      = "BG"
-    SumFind(input_dir, sample)
-    # Sum signal
-    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1_Signal"
-    sample      = "T4bd"
-    SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1_Signal"
-    sample      = "T4bd"
-    SumFind(input_dir, sample)
+    
+    # --- Sum signal --- #
+    #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1_Signal"
+    #sample      = "T4bd"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1_Signal"
+    #sample      = "T4bd"
+    #SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

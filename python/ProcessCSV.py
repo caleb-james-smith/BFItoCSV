@@ -239,6 +239,12 @@ def main():
     #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1_Signal"
     #sample      = "T4bd"
     #SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2_Signal"
+    sample      = "T4bd"
+    SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2_Signal"
+    sample      = "T4bd"
+    SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

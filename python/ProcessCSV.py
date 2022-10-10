@@ -31,38 +31,35 @@ def getValues(data):
         errors.append(bin_error)
     return yields, errors
 
-def Decode(input_dir, input_file):
-    background  = []
-    signal      = []
-    info        = []
+def Decode(input_dir, input_file, process_names):
+    background_name = process_names["background"]
+    signal_name     = process_names["signal"]
+    background      = []
+    signal          = []
+    info            = []
     f = open(input_dir + "/" + input_file, "r")
     for x in f:
-        #print("x = {0}".format(x))
+        x_clean = x.replace('\n','')
+        #print("x_clean = {0}".format(x_clean))
         
-        # add ttbar
-        # if "ttbar" in x:
-        #     background.append(x.replace("\n",''))
-        #     #print("ttbar found in {0}".format(x))
-        # add all-bkg
-        if "all-bkg" in x:
-            background.append(x.replace("\n",''))
-            #print("all-bkg found in {0}".format(x))
-        #elif "T4bd_5000490" in x:
-        elif "T4bd" in x:
-            #print("signal found in {0}".format(x))
-            signal.append(x.replace("\n",''))
+        if background_name in x_clean:
+            background.append(x_clean)
+            #print("The background '{0}' was found in {1}.".format(background_name, x_clean))
+        elif signal_name in x_clean:
+            signal.append(x_clean)
+            #print("The signal '{0}' was found in {1}.".format(signal_name, x_clean))
     info.append(input_file)
     info.append(background)
     info.append(signal)
     
     return info
 
-def Sum(input_dir, input_file):
+def Sum(input_dir, input_file, process_names):
     #print("input_file: {0}, input_dir: {1}".format(input_file, input_dir))
     #print("input_dir: {0}, input_file: {1}".format(input_dir, input_file))
     #print(" --- {0}".format(input_file))
 
-    info        = Decode(input_dir, input_file)
+    info        = Decode(input_dir, input_file, process_names)
     name        = info[0]
     background  = info[1]
     signal      = info[2]
@@ -111,7 +108,7 @@ def Sum(input_dir, input_file):
         f.close()
 
 
-def Finder(input_dir, cat_dir, header):
+def Finder(input_dir, cat_dir, header, process_names):
     full_dir = "{0}/{1}".format(input_dir, cat_dir)
     lepton_types = ["gold", "silver", "bronze", "zero"]
     
@@ -151,13 +148,13 @@ def Finder(input_dir, cat_dir, header):
                 zero.append(os.path.join(name))
     
     for x in gold:
-        Sum(full_dir, x)
+        Sum(full_dir, x, process_names)
     for x in silver:
-        Sum(full_dir, x)
+        Sum(full_dir, x, process_names)
     for x in bronze:
-        Sum(full_dir, x)
+        Sum(full_dir, x, process_names)
     for x in zero:
-        Sum(full_dir, x)
+        Sum(full_dir, x, process_names)
     
 def Summary(input_file):
     df              = pd.read_csv(input_file)
@@ -176,13 +173,23 @@ def Summary(input_file):
 
 def SumFind(input_dir, sample):
     print("Processing input directory: {0}".format(input_dir))
+    header          = "Name,Background,Background_Err,Signal,Signal_Err\n"
+    categories      = ["0L", "1L", "2L", "3L"]
     
-    header = "Name,Background,Background_Err,Signal,Signal_Err\n"
-    categories = ["0L", "1L", "2L", "3L"]
+    # Specify process names here:
+    process_names = {}
+    process_names["background"] = "all-bkg"
+    #process_names["background"] = "ttbar"
+    #process_names["background"] = "ZDY"
+    #process_names["background"] = "Wjets"
+    process_names["signal"]     = "T4bd"
+    
+    background_name_clean = process_names["background"].replace('-', '')
+    summary_file = "{0}/Summary_{1}.csv".format(input_dir, background_name_clean)
 
     for cat in categories:
         cat_dir = "{0}_{1}".format(sample, cat)
-        Finder(input_dir, cat_dir, header)
+        Finder(input_dir, cat_dir, header, process_names)
 
     summary_list = []
 
@@ -201,7 +208,6 @@ def SumFind(input_dir, sample):
     
     #print(summary_list)
 
-    summary_file = "{0}/Summary.csv".format(input_dir)
     f = open(summary_file, "w")
     f.write(header)
     for line in summary_list:
@@ -228,9 +234,9 @@ def main():
     input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2"
     sample      = "BG"
     SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
-    sample      = "BG"
-    SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
     
     # --- Sum signal --- #
     #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1_Signal"
@@ -239,12 +245,12 @@ def main():
     #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_09_28_v1_Signal"
     #sample      = "T4bd"
     #SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2_Signal"
-    sample      = "T4bd"
-    SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2_Signal"
-    sample      = "T4bd"
-    SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2_Signal"
+    #sample      = "T4bd"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2_Signal"
+    #sample      = "T4bd"
+    #SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

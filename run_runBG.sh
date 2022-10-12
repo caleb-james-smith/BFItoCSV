@@ -41,6 +41,8 @@
 #./runBG.sh BFI_Files/NanoAODv9/BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v1.root BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v1
 #./runBG.sh BFI_Files/NanoAODv9/BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v2.root BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v2
 
-./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2.root BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2
-./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2.root BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2
+#./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2.root BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2
+#./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2.root BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2
+
+./runBG.sh BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1.root BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1
 

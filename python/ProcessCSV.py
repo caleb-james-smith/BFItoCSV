@@ -5,16 +5,6 @@ import numpy as np
 import pprint
 import os
 
-# TODO
-
-# DONE
-# - for 0L, do not use gold, silver, bronze (they do not exist); add all bins
-# - fix first column
-# - skip -999 values
-# - run over all background
-# - fix signal name
-# - test on signal and background
-
 # get yields and errors from data
 def getValues(data):
     yields = []
@@ -231,12 +221,15 @@ def main():
     #input_dir   = "BFI_Alice_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
     #sample      = "BG"
     #SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2"
-    sample      = "BG"
-    SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_03_v2"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
     #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
     #sample      = "BG"
     #SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1"
+    sample      = "BG"
+    SumFind(input_dir, sample)
     
     # --- Sum signal --- #
     #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1_Signal"
@@ -249,6 +242,9 @@ def main():
     #sample      = "T4bd"
     #SumFind(input_dir, sample)
     #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2_Signal"
+    #sample      = "T4bd"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1_Signal"
     #sample      = "T4bd"
     #SumFind(input_dir, sample)
 

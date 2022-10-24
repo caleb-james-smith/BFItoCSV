@@ -251,6 +251,9 @@ def main():
     input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal"
     sample      = "TChiWZ"
     SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1_Signal"
+    sample      = "TChiWZ"
+    SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

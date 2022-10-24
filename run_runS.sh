@@ -36,4 +36,5 @@
 #./runS.sh T4bd BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1.root BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1_Signal
 
 ./runS.sh TChiWZ BFI_Files/NanoAODv9/BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1.root BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal
+./runS.sh TChiWZ BFI_Files/NanoAODv9/BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1.root BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1_Signal
 

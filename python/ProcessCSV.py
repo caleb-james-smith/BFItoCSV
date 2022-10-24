@@ -172,7 +172,8 @@ def SumFind(input_dir, sample):
     #process_names["background"] = "ttbar"
     #process_names["background"] = "ZDY"
     #process_names["background"] = "Wjets"
-    process_names["signal"]     = "T4bd"
+    #process_names["signal"]     = "T4bd"
+    process_names["signal"]     = "TChiWZ"
     
     background_name_clean = process_names["background"].replace('-', '')
     summary_file = "{0}/Summary_{1}.csv".format(input_dir, background_name_clean)
@@ -227,9 +228,9 @@ def main():
     #input_dir   = "BFI_NanoAODv9_T4bd_ttbar_2022_10_03_v2"
     #sample      = "BG"
     #SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1"
-    sample      = "BG"
-    SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1"
+    #sample      = "BG"
+    #SumFind(input_dir, sample)
     
     # --- Sum signal --- #
     #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_09_28_v1_Signal"
@@ -247,6 +248,9 @@ def main():
     #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1_Signal"
     #sample      = "T4bd"
     #SumFind(input_dir, sample)
+    input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal"
+    sample      = "TChiWZ"
+    SumFind(input_dir, sample)
 
 if __name__ == '__main__':
     main()

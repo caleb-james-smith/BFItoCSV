@@ -35,6 +35,10 @@
 
 #./runS.sh T4bd BFI_Files/NanoAODv9/BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1.root BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1_Signal
 
-./runS.sh TChiWZ BFI_Files/NanoAODv9/BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1.root BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal
-./runS.sh TChiWZ BFI_Files/NanoAODv9/BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1.root BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1_Signal
+#./runS.sh TChiWZ BFI_Files/NanoAODv9/BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1.root BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal
+#./runS.sh TChiWZ BFI_Files/NanoAODv9/BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1.root BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1_Signal
+
+./runS.sh TChiWZ /uscms/home/janguian/nobackup/CMSSW_10_6_5/src/KUEWKinoAnalysis/BFI_B20-51_TChiWZ16_L137/BFI_B20-51_TChiWZ16_L137.root BFI_B20-51_TChiWZ16_L137
+./runS.sh TChiWZ /uscms/home/janguian/nobackup/CMSSW_10_6_5/src/KUEWKinoAnalysis/BFI_B20-51_TChiWZ17_L137/BFI_B20-51_TChiWZ17_L137.root BFI_B20-51_TChiWZ17_L137
+./runS.sh TChiWZ /uscms/home/janguian/nobackup/CMSSW_10_6_5/src/KUEWKinoAnalysis/BFI_B20-51_TChiWZ18_L137/BFI_B20-51_TChiWZ18_L137.root BFI_B20-51_TChiWZ18_L137
 

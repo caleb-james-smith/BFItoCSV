@@ -174,9 +174,12 @@ def SumFind(input_dir, sample):
     #process_names["background"] = "Wjets"
     #process_names["signal"]     = "T4bd"
     process_names["signal"]     = "TChiWZ"
+    #process_names["signal"]     = "TChiWZ_2500240"
     
-    background_name_clean = process_names["background"].replace('-', '')
-    summary_file = "{0}/Summary_{1}.csv".format(input_dir, background_name_clean)
+    background_name_clean   = process_names["background"].replace('-', '')
+    signal_name_clean       = process_names["signal"].replace('-', '')
+    #summary_file = "{0}/Summary_{1}.csv".format(input_dir, background_name_clean)
+    summary_file = "{0}/Summary_{1}.csv".format(input_dir, signal_name_clean)
 
     for cat in categories:
         cat_dir = "{0}_{1}".format(sample, cat)
@@ -248,10 +251,20 @@ def main():
     #input_dir   = "BFI_NanoAODv9_T4bd_allbkg_2022_10_11_v1_Signal"
     #sample      = "T4bd"
     #SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal"
+    #input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_20_v1_Signal"
+    #sample      = "TChiWZ"
+    #SumFind(input_dir, sample)
+    #input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1_Signal"
+    #sample      = "TChiWZ"
+    #SumFind(input_dir, sample)
+    
+    input_dir   = "BFI_B20-51_TChiWZ16_L137"
     sample      = "TChiWZ"
     SumFind(input_dir, sample)
-    input_dir   = "BFI_NanoAODv9_TChiWZ_allbkg_2022_10_24_v1_Signal"
+    input_dir   = "BFI_B20-51_TChiWZ17_L137"
+    sample      = "TChiWZ"
+    SumFind(input_dir, sample)
+    input_dir   = "BFI_B20-51_TChiWZ18_L137"
     sample      = "TChiWZ"
     SumFind(input_dir, sample)
 
